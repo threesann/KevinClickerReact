@@ -9,7 +9,11 @@ export default function Audio() {
   useEffect(() => {
     let timeout = setInterval(() => {
       if (!ref.current?.audioEl.current?.paused) clearInterval(timeout)
-      ref.current?.audioEl.current?.play()
+      try {
+        ref.current?.audioEl.current?.play()
+      } catch (err) {
+        console.log("e")
+      }
     }, 500)
     return () => clearTimeout(timeout)
   }, [])

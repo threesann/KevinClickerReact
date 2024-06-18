@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from 'zustand/middleware'
-import upgrades from "../content/upgrades";
+import { upgrades } from "../content/upgrades";
 
 interface GameStore {
   kev_bucks: number
@@ -72,13 +72,13 @@ const useGameStore = create(
     {
       name: "kevin-clicker-save",
       storage: createJSONStorage(() => localStorage),
-      partialize: (state) => 
-        ({ 
-          kev_bucks: state.kev_bucks, 
-          purchased_upgrades: state.purchased_upgrades, 
-          xp: state.xp, 
-          muted: state.muted 
-        } as GameStore)
+      partialize: (state) =>
+      ({
+        kev_bucks: state.kev_bucks,
+        purchased_upgrades: state.purchased_upgrades,
+        xp: state.xp,
+        muted: state.muted
+      } as GameStore)
     }
   ))
 export default useGameStore

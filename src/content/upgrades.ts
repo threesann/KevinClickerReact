@@ -1,7 +1,7 @@
 import useGameStore from "../lib/store";
 import { Upgrade } from "./upgrades.types";
 
-export default [
+export const upgrades =  [
   {
     id: "poolcue",
     name: "poolcue",

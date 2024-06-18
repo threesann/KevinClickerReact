@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import upgrades from "../../content/upgrades";
+import { upgrades } from "../../content/upgrades";
 import { Upgrade } from "../../content/upgrades.types";
 import useGameStore from "../../lib/store";
 
@@ -16,7 +16,7 @@ export default function UpgradeDisplay({ upgrade }: ComponentProps) {
 
   const price = useMemo(() => upgrade.price(upgradeLevel), [upgradeLevel])
   const isLocked = typeof parentLevel === "number" && parentLevel < 10
-  
+
   function purchaseUpgrade() {
     if (kevBucks < price) return;
     deductKevBucks(price)
@@ -32,7 +32,7 @@ export default function UpgradeDisplay({ upgrade }: ComponentProps) {
       {" "}to level 10!
     </span>
   </div>
-  
+
   return <button onClick={purchaseUpgrade} className="bg-black/30 hover:bg-black/50 flex-shrink-0 p-3 text-left flex gap-3 items-center justify-between">
     <div className="flex gap-3 items-center">
       <img src={upgrade.image} className="h-14 w-14" />

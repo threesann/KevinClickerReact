@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import upgrades from "../content/upgrades";
+import { upgrades } from "../content/upgrades";
 import useGameStore from "../lib/store";
 import UpgradeDisplay from "./upgrades/UpgradeDisplay";
 

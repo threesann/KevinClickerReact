@@ -12,7 +12,9 @@ export default function App() {
         <ClickerSection />
         <LevelSection />
       </div>
-    
+      <UpgradeSection />
+      <FooterSection />
+      {/* <Audio /> */}
     </main>
   )
 }

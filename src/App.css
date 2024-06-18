@@ -8,7 +8,7 @@
   font-weight: normal;
   src:
     local("Fixedsys Excelsior 3.01"),
-    url("assets/FSEX300.woff") format("woff");
+    url("/assets/FSEX300.woff") format("woff");
 }
 
 @layer utilities {

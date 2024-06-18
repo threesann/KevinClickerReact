@@ -4,6 +4,7 @@ import ClickerSection from './sections/ClickerSection'
 import FooterSection from './sections/FooterSection'
 import LevelSection from './sections/LevelSection'
 import UpgradeSection from './sections/UpgradeSection'
+import { Analytics } from "@vercel/analytics/react"
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
       <UpgradeSection />
       <FooterSection />
       <Audio />
+      <Analytics />
     </main>
   )
 }

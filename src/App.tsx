@@ -14,7 +14,7 @@ export default function App() {
       </div>
       <UpgradeSection />
       <FooterSection />
-      {/* <Audio /> */}
+      <Audio />
     </main>
   )
 }

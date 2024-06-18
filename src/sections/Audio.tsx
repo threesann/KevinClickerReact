@@ -10,7 +10,7 @@ export default function Audio() {
     let timeout = setInterval(() => {
       if (!ref.current?.audioEl.current?.paused) clearInterval(timeout)
       try {
-        ref.current?.audioEl.current?.play()
+        // ref.current?.audioEl.current?.play()
       } catch (err) {
         console.log("e")
       }

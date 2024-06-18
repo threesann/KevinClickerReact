@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Fixedsys Excelsior 3.01";
+  font-style: normal;
+  font-weight: normal;
+  src:
+    local("Fixedsys Excelsior 3.01"),
+    url("assets/FSEX300.woff") format("woff");
+}
+
+@layer utilities {
+  .font-sys {
+    font-family: "Fixedsys Excelsior 3.01";
+    font-weight: 300;
+  }
+
+  .disable-dbl-tap-zoom {
+    touch-action: manipulation;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+   /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+  }
+}
+
+body {
+  @apply font-sys text-white;
+  background-color: skyblue;
+  min-height: 100vh;
+  margin: 0;
+
+  background-image: url("/assets/backgrounds/bg_morning.png");
+  animation: backgroundAnimate 60s linear infinite;
+}
+
+@keyframes backgroundAnimate {
+  from {
+    background-position-x: 0
+  }
+  to {
+    background-position-x: 1920px
+  }
+}

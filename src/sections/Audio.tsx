@@ -1,16 +1,15 @@
 import { useEffect, useRef } from "react";
-import ReactAudioPlayer from "react-audio-player";
 import useGameStore from "../lib/store";
 
 export default function Audio() {
   const muted = useGameStore(state => state.muted)
-  let ref = useRef<ReactAudioPlayer>(null)
+  let ref = useRef<HTMLAudioElement>(null)
 
   useEffect(() => {
     let timeout = setInterval(() => {
-      if (!ref.current?.audioEl.current?.paused) clearInterval(timeout)
+      if (!ref.current?.paused) clearInterval(timeout)
       try {
-        // ref.current?.audioEl.current?.play()
+        ref.current?.play()
       } catch (err) {
         console.log("e")
       }
@@ -19,7 +18,7 @@ export default function Audio() {
   }, [])
 
   return <div className="hidden">
-    <ReactAudioPlayer 
+    <audio 
       src="/assets/audio/backing.mp3" 
       ref={ref} 
 

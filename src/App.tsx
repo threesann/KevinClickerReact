@@ -23,11 +23,16 @@ export default function App() {
       <div className='invisible'>
         {Backgrounds.map(background => <img src={`/assets/backgrounds/${background}`} />)}
       </div> */}
-
-      <div className='max-w-sm fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/50 p-6 text-center'>
-        <h1 className='font-bold text-3xl leading-tight'>Welcome to Kevster Clicker Resources</h1>
-        <p className='text-white/75 leading-tight'>Here you can learn about different resources and skills that can help you exceed your education in programming and software development.</p>
-        <img src="/code.jpg" className='mt-3' />
+      <div className='fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-3'>
+        <div className='max-w-sm bg-black/50 p-6 text-center'>
+          <h1 className='font-bold text-3xl leading-tight'>Maintenance</h1>
+          <p className='text-white/75 leading-tight'>Sorry but Kevster Clicker is currently down for maintenence please come back later. You can start your educational course once this maintenance period is over.</p>
+        </div>
+        <div className='max-w-sm bg-black/50 p-6 text-center'>
+          <h1 className='font-bold text-3xl leading-tight'>Welcome to Kevster Clicker Resources</h1>
+          <p className='text-white/75 leading-tight'>Here you can learn about different resources and skills that can help you exceed your education in programming and software development.</p>
+          <img src="/code.jpg" className='mt-3' />
+        </div>
       </div>
     </main>
   )

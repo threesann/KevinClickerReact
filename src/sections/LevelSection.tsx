@@ -3,6 +3,7 @@ import { motion } from "framer-motion"
 import { useEffect, useState, useRef } from "react"
 import ConfettiExplosion from "react-confetti-explosion"
 import { useResizeObserver } from "usehooks-ts"
+import Backgrounds from "../content/backgrounds"
 
 interface ComponentProps { }
 export default function LevelSection({ }: ComponentProps) {
@@ -28,6 +29,11 @@ export default function LevelSection({ }: ComponentProps) {
       setPreviousLevel(level)
       setTimeout(() => setIsCelebrating(false), 1000)
     }
+
+    let background_index = Math.floor(level / 5) % 3
+    let body = document.querySelector("body")
+    if (body)
+      body.style.backgroundImage = `url("/assets/backgrounds/${Backgrounds[background_index]}")`
 
     return clearTimeout(timeout)
   }, [level])

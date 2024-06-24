@@ -28,6 +28,9 @@ export default function ClickerSection({ }: ComponentProps) {
       setPlayerClicks(0)
       return current_bucks
     }), 1000)
+
+    window.__dev__add__kev__bucks__ = incrementKevBucks
+    
     return () => clearInterval(interval)
   }, [])
 

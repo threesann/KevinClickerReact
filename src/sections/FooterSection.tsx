@@ -2,10 +2,8 @@ import useGameStore from "../lib/store"
 
 interface ComponentProps { }
 export default function FooterSection({ }: ComponentProps) {
-  const muted = useGameStore(state => state.muted)
-  const toggleMuted = useGameStore(state => state.toggleMuted)
   
-  return <div className='lg:col-span-3 flex items-center justify-center sm:divide-x-2 flex-col sm:flex-row leading-tight'>
+  return <div className='lg:col-span-3 flex items-center justify-center sm:divide-x-2 my-3 flex-col sm:flex-row leading-tight'>
     <button className="px-3" onClick={() => {
       alert([
         "Programming: David Fiddes",
@@ -22,6 +20,5 @@ export default function FooterSection({ }: ComponentProps) {
       if (confirmation)
         useGameStore.setState(useGameStore.getInitialState())
     }}>Reset Progress</button>
-    <button className="px-3" onClick={() => toggleMuted()}>{muted ? "Unmute" : "Mute"}</button>
   </div>
 }

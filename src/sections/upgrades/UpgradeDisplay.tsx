@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { upgrades } from "../../content/upgrades";
-import { Upgrade } from "../../content/upgrades.types";
+import { Upgrade } from "../../content/content.types";
 import useGameStore from "../../lib/store";
 
 interface ComponentProps {

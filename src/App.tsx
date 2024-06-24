@@ -1,12 +1,5 @@
 import './App.css'
-import ClickerSection from './sections/ClickerSection'
-import FooterSection from './sections/FooterSection'
-import LevelSection from './sections/LevelSection'
-import UpgradeSection from './sections/UpgradeSection'
-import { Analytics } from "@vercel/analytics/react"
-import SupportPopup from './popups/SupportPopup'
-import HeaderSection from './sections/HeaderSection'
-import Backgrounds from './content/backgrounds'
+
 
 export default function App() {
 

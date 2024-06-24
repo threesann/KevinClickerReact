@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from 'zustand/middleware'
 import { upgrades } from "../content/upgrades";
 
-interface GameStore {
+export interface GameStore {
   kev_bucks: number
   incrementKevBucks: (amount?: number) => void
   deductKevBucks: (amount?: number) => void
@@ -22,8 +22,8 @@ interface GameStore {
   incrementUpgradeLevel: (id: string) => void
   calculateKevBucksPerSecond: () => number
 
-  muted: boolean
-  toggleMuted: (state?: boolean) => void
+  paused: boolean
+  togglePaused: (state?: boolean) => void
 }
 
 const level_constant = 0.07;
@@ -66,8 +66,8 @@ const useGameStore = create(
         return kps
       },
 
-      muted: false,
-      toggleMuted: (state: boolean = !get().muted) => set({ muted: state }),
+      paused: false,
+      togglePaused: (state: boolean = !get().paused) => set({ paused: state }),
     }),
     {
       name: "kevin-clicker-save",
@@ -77,7 +77,7 @@ const useGameStore = create(
         kev_bucks: state.kev_bucks,
         purchased_upgrades: state.purchased_upgrades,
         xp: state.xp,
-        muted: state.muted
+        paused: state.paused
       } as GameStore)
     }
   ))

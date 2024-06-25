@@ -144,7 +144,7 @@ export const upgrades = [
     name: "matter converter",
     description:
       "Convert the fabric of the Universe into KevBucks.",
-    image: "assets/icons/icon_placeholder.png",
+    image: "assets/icons/icon_matterconv.png",
 
     price: (level) => Math.round(1000000 + ((2000 * level) ** 1.35)),
     kps: (level) => Math.round((200 * level) ** 1.5),

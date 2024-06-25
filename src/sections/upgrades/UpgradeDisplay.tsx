@@ -2,7 +2,6 @@ import { useMemo } from "react";
 import { upgrades } from "../../content/upgrades";
 import { Upgrade } from "../../content/content.types";
 import useGameStore from "../../lib/store";
-import { useStore } from "zustand";
 
 interface ComponentProps {
   upgrade: Upgrade;
@@ -28,9 +27,10 @@ export default function UpgradeDisplay({ upgrade }: ComponentProps) {
 
   function purchaseUpgrade() {
     if (kevBucks < price) return;
+    let upgradeIndex = (upgrades.findIndex(x => x.id === upgrade.id) ?? 0) + 1
     deductKevBucks(price)
     incrementUpgradeLevel(upgrade.id)
-    incrementXP(Math.round(price * 0.15))
+    incrementXP(Math.ceil((upgradeIndex ** 1.5) + (upgradeLevel + 1) ** 1.3))
   }
 
   if (isLocked) return <div className="px-3 py-4 bg-black/30 flex items-center justify-center flex-col">

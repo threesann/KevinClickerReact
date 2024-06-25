@@ -14,6 +14,7 @@ export default function CueHandler({ }: ComponentProps) {
   var cue_layers = []
   while (cue_array_temp.length > 0)
     cue_layers.push(cue_array_temp.splice(0, 50));
+  cue_layers = cue_layers.splice(0, 8)
 
   return <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 -z-10" style={{ rotate: `${tick % 360}deg` }}>
     {cue_layers.map((layer, l) => layer.map((_, i, a) => {

@@ -10,6 +10,7 @@ export default function CreditsPopup({ }: ComponentProps) {
     <p>Programming: David Fiddes</p>
     <p>Assets & Music: Rishabh Sandhu</p>
     <p>Concepts/Additional Help: Leon Carpin</p>
+    <p>Additional Assets: Josh Taylor</p>
     <p>Playtesters: Daniels, Josh, Harry</p>
     <p>Big Shoutouts: God Emperor Kevster II</p>
     <p>Thanks for playing!</p>

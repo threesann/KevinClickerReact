@@ -4,7 +4,7 @@ interface ComponentProps { }
 export default function HowToPlayerPopup({ }: ComponentProps) {
   return <Popup trigger={
     <button className="bg-black/25 hover:bg-black/50 p-1 w-fit" title="Help">
-      <img src="/public/assets/header/button_help.gif" className="h-10 w-10" />
+      <img src="/assets/header/button_help.gif" className="h-10 w-10" />
     </button>
   }
     title="How to play!">

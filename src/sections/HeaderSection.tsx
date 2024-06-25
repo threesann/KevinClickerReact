@@ -24,7 +24,7 @@ export default function HeaderSection() {
       <div className="flex gap-1">
         <a href="https://threesann.github.io" title="Back to Home">
           <div className="bg-black/25 hover:bg-black/50 p-1 w-fit">
-            <img src="/public/assets/header/button_home.png" className="h-10 w-10" />
+            <img src="/assets/header/button_home.png" className="h-10 w-10" />
           </div>
         </a>
         <HowToPlayerPopup />

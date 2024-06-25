@@ -10,6 +10,6 @@ export default function ResetButton() {
     if (confirmation)
       useGameStore.setState(useGameStore.getInitialState())
   }}>
-    <img src={isHover ? "/public/assets/header/button_reset-hover.gif" :"/public/assets/header/button_reset.png"} className="h-10 w-10" />
+    <img src={isHover ? "/public/assets/header/button_reset-hover.gif" :"/assets/header/button_reset.png"} className="h-10 w-10" />
   </button>
 }

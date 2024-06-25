@@ -21,5 +21,10 @@ const AudioTracks = [
     artist: "threesan",
     file: "/assets/audio/kevster vs THE CARTEL.wav",
   },
+  {
+    name: "THE END OF KEVIN COLLINS (DEMO)",
+    artist: "threesan",
+    file: "/assets/audio/THE END OF KEVIN COLLINS.wav",
+  }
 ] as AudioTrack[]
 export default AudioTracks

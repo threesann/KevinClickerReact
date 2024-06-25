@@ -34,8 +34,8 @@ export default function ClickerSection({ }: ComponentProps) {
 
     window.parsnip = {
       more: incrementKevBucks,
-      all: () => {
-        useGameStore.setState({ purchased_upgrades: Object.fromEntries(upgrades.map(u => [u.id, 10])) })
+      all: (level: number = 10) => {
+        useGameStore.setState({ purchased_upgrades: Object.fromEntries(upgrades.map(u => [u.id, level])) })
       },
       support: () => {
         useGameStore.setState({ support_shown: true })

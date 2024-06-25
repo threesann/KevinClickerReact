@@ -1,6 +1,40 @@
 import { create } from "zustand";
-import { persist, createJSONStorage } from 'zustand/middleware'
+import { persist, createJSONStorage, StateStorage } from 'zustand/middleware'
 import { upgrades } from "../content/upgrades";
+import supabase from "./supabase";
+import debounce from "lodash.debounce"
+
+const storage: StateStorage = {
+  getItem: async (name: string): Promise<string | null> => {
+    let { data: { session }, error: session_error } = await supabase.auth.getSession()
+    if (session_error || !session) {
+      return localStorage.getItem(name) || null
+    }
+
+    let { data, error: data_error } = await supabase.from("saves").select("*").eq("name", name).eq("user", session.user.id).limit(1).single()
+    if (!data || data_error) return null;
+
+    return data.value;
+  },
+  setItem: debounce(async (name: string, value: string): Promise<void> => {
+    let { data: { session }, error } = await supabase.auth.getSession()
+    if (error || !session) {
+      localStorage.setItem(name, value)
+      return;
+    }
+
+    await supabase.from("saves").upsert({ value, user: session.user.id, name }).eq("user", session.user.id).eq("name", name)
+  }, 500),
+  removeItem: async (name: string): Promise<void> => {
+    let { data: { session }, error } = await supabase.auth.getSession()
+    if (error || !session) {
+      localStorage.removeItem(name)
+      return;
+    }
+
+    await supabase.from("saves").delete().eq("user", session.user.id).eq("name", name)
+  },
+}
 
 export interface GameStore {
   kev_bucks: number
@@ -83,7 +117,7 @@ const useGameStore = create(
     }),
     {
       name: "kevin-clicker-save",
-      storage: createJSONStorage(() => localStorage),
+      storage: createJSONStorage(() => storage),
       partialize: (state) =>
       ({
         kev_bucks: state.kev_bucks,

@@ -1,6 +1,7 @@
 import useGameStore from "../lib/store";
 import CreditsPopup from "../popups/CreditsPopup";
 import HowToPlayerPopup from "../popups/HowToPlayPopup";
+import AccountButton from "./header/AccountButton";
 import AudioPlayer from "./header/AudioPlayer";
 import ResetButton from "./header/ResetButton";
 
@@ -8,10 +9,11 @@ export default function HeaderSection() {
   const cookieMode = useGameStore(state => state.cookie_mode)
 
   return <header className="bg-[#3d63ff] border-b-4 border-[#355af0] w-full h-fit">
-    <div className="flex justify-between items-center relative flex-col sm:flex-row gap-3 px-3 lg:px-0 lg:gap-0 py-3 sm:py-0">
+    <div className="flex justify-between items-center relative flex-col sm:flex-row gap-1.5 px-3 lg:px-0 lg:gap-0 py-3 sm:py-0">
 
       {/* left */}
-      <div className="flex gap-1 items-center">
+      <div className="flex flex-col sm:flex-row gap-1.5 items-center">
+        <AccountButton />
         <AudioPlayer />
       </div>
 

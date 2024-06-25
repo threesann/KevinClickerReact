@@ -9,10 +9,16 @@ import Backgrounds from './content/backgrounds'
 import useGameStore from './lib/store'
 import { useEffect } from 'react'
 import LoadingScreen from './sections/LoadingScreen'
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+
+const queryClient = new QueryClient()
 
 export default function App() {
   const toggleCookieMode = useGameStore(state => state.toggleCookieMode)
-  
+
   useEffect(() => {
     function onKeyPress(event: KeyboardEvent) {
       if (event.key !== " ") return;
@@ -23,26 +29,28 @@ export default function App() {
   })
 
   return (
-    <main className='flex flex-col lg:h-screen min-h-screen h-full'>
-      <LoadingScreen />
-      
-      <HeaderSection />
+    <QueryClientProvider client={queryClient}>
+      <main className='flex flex-col lg:h-screen min-h-screen h-full'>
+        <LoadingScreen />
 
-      <div className='grid lg:grid-cols-3 lg:grid-rows-[1fr_2rem] p-6 min-h-0 gap-6'>
-        <div className='flex flex-col lg:col-span-2 min-h-[48rem] gap-6'>
-          <ClickerSection />
-          <LevelSection />
+        <HeaderSection />
+
+        <div className='grid lg:grid-cols-3 lg:grid-rows-[1fr_2rem] p-6 min-h-0 gap-6'>
+          <div className='flex flex-col lg:col-span-2 min-h-[48rem] gap-6'>
+            <ClickerSection />
+            <LevelSection />
+          </div>
+          <UpgradeSection />
         </div>
-        <UpgradeSection />
-      </div>
 
-      <Analytics />
-      <SupportPopup />
+        <Analytics />
+        <SupportPopup />
 
 
-      <div className='invisible fixed'>
-        {Backgrounds.map(background => <img key={background} src={`/assets/backgrounds/${background}`} />)}
-      </div>
-    </main>
+        <div className='invisible fixed'>
+          {Backgrounds.map(background => <img key={background} src={`/assets/backgrounds/${background}`} />)}
+        </div>
+      </main>
+    </QueryClientProvider>
   )
 }

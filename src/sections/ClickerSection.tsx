@@ -32,7 +32,7 @@ export default function ClickerSection({ }: ComponentProps) {
       return current_bucks
     }), 1000)
 
-    window.cabbage = {
+    window.parsnip = {
       more: incrementKevBucks,
       all: () => {
         useGameStore.setState({ purchased_upgrades: Object.fromEntries(upgrades.map(u => [u.id, 10])) })

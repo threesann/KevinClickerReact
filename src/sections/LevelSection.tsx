@@ -26,7 +26,7 @@ export default function LevelSection({ }: ComponentProps) {
 
     if (level > previousLevel) {
       setIsCelebrating(true)
-      setPreviousLevel(level)
+      setPreviousLevel(level)+
       setTimeout(() => setIsCelebrating(false), 1000)
     }
 

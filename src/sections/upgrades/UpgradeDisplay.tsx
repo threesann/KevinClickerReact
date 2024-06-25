@@ -30,7 +30,7 @@ export default function UpgradeDisplay({ upgrade }: ComponentProps) {
     if (kevBucks < price) return;
     deductKevBucks(price)
     incrementUpgradeLevel(upgrade.id)
-    incrementXP(Math.round(price * 0.25))
+    incrementXP(Math.round(price * 0.15))
   }
 
   if (isLocked) return <div className="px-3 py-4 bg-black/30 flex items-center justify-center flex-col">

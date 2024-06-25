@@ -26,7 +26,7 @@ export default function UpgradeSection({ }: ComponentProps) {
 
   return <div className='w-full min-h-0'>
     <h2 className="text-7xl uppercase">Upgrades</h2>
-    <div className="grid gap-3 lg:overflow-y-scroll min-h-0 no-scrollbar max-h-[max(44rem,calc(100vh-225px))]">
+    <div className="grid gap-3 lg:overflow-y-scroll min-h-0 no-scrollbar max-h-[max(44rem,calc(100vh-175px))]">
       {upgrades.map(upgrade => <UpgradeDisplay key={upgrade.id} upgrade={upgrade} />)}
     </div>
   </div>

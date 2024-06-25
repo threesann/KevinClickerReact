@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { upgrades } from "../../content/upgrades";
 import { Upgrade } from "../../content/content.types";
 import useGameStore from "../../lib/store";
+import { useStore } from "zustand";
 
 interface ComponentProps {
   upgrade: Upgrade;
@@ -10,12 +11,20 @@ export default function UpgradeDisplay({ upgrade }: ComponentProps) {
   const kevBucks = useGameStore(store => store.kev_bucks)
   const incrementUpgradeLevel = useGameStore(store => store.incrementUpgradeLevel)
   const deductKevBucks = useGameStore(store => store.deductKevBucks)
+  
   const upgradeLevel = useGameStore(store => store.purchased_upgrades[upgrade.id] ?? 0)
-  const parentLevel = useGameStore(store => upgrade.parent_upgrade ? store.purchased_upgrades[upgrade.parent_upgrade] ?? 0 : null)
+  
+  const parentUpgrade = useMemo(() => upgrades.find(u => u.id === upgrade.parent_upgrade), [upgrade.parent_upgrade])
+  const parentLevel = useGameStore(store => parentUpgrade ? store.purchased_upgrades[parentUpgrade.id] ?? 0 : null)
+
+  const grandFatherUpgrade = useMemo(() => upgrades.find(u => u.id === parentUpgrade?.parent_upgrade) ?? null, [parentUpgrade?.parent_upgrade])
+  const grandFatherLevel = useGameStore(store => grandFatherUpgrade ? store.purchased_upgrades[grandFatherUpgrade.id] ?? 0 : null)
+
   const incrementXP = useGameStore(store => store.incrementXP)
 
   const price = useMemo(() => upgrade.price(upgradeLevel), [upgradeLevel])
-  const isLocked = typeof parentLevel === "number" && parentLevel < 10
+  const isLocked = typeof parentLevel === "number" && parentLevel < 10 || (parentUpgrade && (typeof parentLevel !== "number"))
+  const isHint = typeof grandFatherLevel === "number" ? (grandFatherLevel ?? 0) >= 10 : true
 
   function purchaseUpgrade() {
     if (kevBucks < price) return;
@@ -26,11 +35,11 @@ export default function UpgradeDisplay({ upgrade }: ComponentProps) {
 
   if (isLocked) return <div className="px-3 py-4 bg-black/30 flex items-center justify-center flex-col">
     <img src="/assets/icons/locked.png" className="h-8 w-8" />
-    <span>
+    {isHint && <span>
       Upgrade{" "}
       <span className="uppercase">{upgrades.find(upgr => upgr.id === upgrade.parent_upgrade)?.name}</span>
       {" "}to level 10!
-    </span>
+    </span>}
   </div>
 
   return <button onClick={purchaseUpgrade} className="bg-black/30 hover:bg-black/50 flex-shrink-0 p-3 text-left flex gap-3 items-center justify-between">

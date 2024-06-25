@@ -1,11 +1,32 @@
 import './App.css'
-
+import ClickerSection from './sections/ClickerSection'
+import LevelSection from './sections/LevelSection'
+import UpgradeSection from './sections/UpgradeSection'
+import { Analytics } from "@vercel/analytics/react"
+import SupportPopup from './popups/SupportPopup'
+import HeaderSection from './sections/HeaderSection'
+import Backgrounds from './content/backgrounds'
+import useGameStore from './lib/store'
+import { useEffect } from 'react'
+import LoadingScreen from './sections/LoadingScreen'
 
 export default function App() {
+  const toggleCookieMode = useGameStore(state => state.toggleCookieMode)
+  
+  useEffect(() => {
+    function onKeyPress(event: KeyboardEvent) {
+      if (event.key !== " ") return;
+      toggleCookieMode()
+    }
+    window.addEventListener("keypress", onKeyPress)
+    return () => window.removeEventListener("keypress", onKeyPress)
+  })
 
   return (
     <main className='flex flex-col lg:h-screen min-h-screen h-full'>
-      {/* <HeaderSection />
+      <LoadingScreen />
+      
+      <HeaderSection />
 
       <div className='grid lg:grid-cols-3 lg:grid-rows-[1fr_2rem] p-6 min-h-0 gap-6'>
         <div className='flex flex-col lg:col-span-2 min-h-[48rem] gap-6'>
@@ -13,26 +34,14 @@ export default function App() {
           <LevelSection />
         </div>
         <UpgradeSection />
-        <FooterSection />
       </div>
 
       <Analytics />
       <SupportPopup />
 
 
-      <div className='invisible'>
-        {Backgrounds.map(background => <img src={`/assets/backgrounds/${background}`} />)}
-      </div> */}
-      <div className='fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-3'>
-        <div className='max-w-sm bg-black/50 p-6 text-center'>
-          <h1 className='font-bold text-3xl leading-tight'>Maintenance</h1>
-          <p className='text-white/75 leading-tight'>Sorry but Kevster Clicker is currently down for maintenence please come back later. You can start your educational course once this maintenance period is over.</p>
-        </div>
-        <div className='max-w-sm bg-black/50 p-6 text-center'>
-          <h1 className='font-bold text-3xl leading-tight'>Welcome to Kevster Clicker Resources</h1>
-          <p className='text-white/75 leading-tight'>Here you can learn about different resources and skills that can help you exceed your education in programming and software development.</p>
-          <img src="/code.jpg" className='mt-3' />
-        </div>
+      <div className='invisible fixed'>
+        {Backgrounds.map(background => <img key={background} src={`/assets/backgrounds/${background}`} />)}
       </div>
     </main>
   )

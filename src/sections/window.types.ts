@@ -1,7 +1,7 @@
 import { GameStore } from "../lib/store";
 
 declare global {
-  interface Window { __dev__add__kev__bucks__: GameStore["incrementKevBucks"]; }
+  interface Window { cabbage: { more: GameStore["incrementKevBucks"], all: () => void, support: () => void }; }
 }
 
-window.__dev__add__kev__bucks__ = window.__dev__add__kev__bucks__ || {};
+window.cabbage = window.cabbage || {};

@@ -43,7 +43,7 @@ export default function LevelSection({ }: ComponentProps) {
     <div ref={ref} className="w-full h-10 bg-[#212121] border-4 border-black relative">
       {isCelebrating && <ConfettiExplosion force={0.3} duration={1000} particleCount={200} width={width} className="absolute left-1/2 -translate-x-1/2" />}
       <motion.div className="h-full bg-[#29d45b] border-t-4 border-[#b5e61d]" initial={{ width: 0 }} animate={{ width: `${percentage_complete * 100}%` }} />
-      <p className="top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 absolute text-lg">{xp - current_level_xp}/{next_level_xp} XP</p>
+      <p className="top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 absolute text-lg">{xp - current_level_xp}/{next_level_xp - current_level_xp} XP</p>
     </div>
   </div>
 }

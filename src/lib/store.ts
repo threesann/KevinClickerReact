@@ -24,9 +24,15 @@ export interface GameStore {
 
   paused: boolean
   togglePaused: (state?: boolean) => void
+
+  cookie_mode: boolean
+  toggleCookieMode: (state?: boolean) => void
+
+  support_shown: boolean
+  toggleSupportShown: (state?: boolean) => void
 }
 
-const level_constant = 0.07;
+const level_constant = 0.0577;
 const useGameStore = create(
   persist<GameStore>(
     (set, get) => ({
@@ -68,6 +74,12 @@ const useGameStore = create(
 
       paused: false,
       togglePaused: (state: boolean = !get().paused) => set({ paused: state }),
+
+      cookie_mode: false,
+      toggleCookieMode: (state: boolean = !get().cookie_mode) => set({ cookie_mode: state }),
+
+      support_shown: false,
+      toggleSupportShown: (state: boolean = !get().support_shown) => set({ support_shown: state }),
     }),
     {
       name: "kevin-clicker-save",

@@ -2,7 +2,7 @@ import useGameStore from "../lib/store";
 import { Upgrade } from "./content.types";
 
 
-// note: upgrades fancycue and onwards are yet to be balanced/tested
+// note: upgrades fancycue and onwards are yet to be properly balanced/tested
 
 export const upgrades = [
   {
@@ -45,7 +45,7 @@ export const upgrades = [
     name: "fancycue",
     description:
       "Prods Kevster with style to produce even more KevBucks!",
-    image: "assets/icons/icon_placeholder.png",
+    image: "assets/icons/icon_fancycue.png",
 
     price: (level) => Math.round(20000 + ((200 * level) ** 1.35)),
     kps: (level) => Math.round((15 * level) ** 1.5),
@@ -60,10 +60,10 @@ export const upgrades = [
     name: "national bank",
     description:
       "Mints KevBucks at a national scale!",
-    image: "assets/icons/icon_placeholder.png",
+    image: "assets/icons/icon_natbank.png",
 
-    price: (level) => Math.round(20000 + ((300 * level) ** 1.35)),
-    kps: (level) => Math.round((15 * level) ** 1.5),
+    price: (level) => Math.round(60000 + ((300 * level) ** 1.35)),
+    kps: (level) => Math.round((30 * level) ** 1.5),
 
     parent_upgrade: "fancycue"
   },
@@ -72,10 +72,10 @@ export const upgrades = [
     name: "kevster's farm",
     description:
       "Grow KevBucks out of the Earth itself!",
-    image: "assets/icons/icon_placeholder.png",
+    image: "assets/icons/icon_farm.png",
 
-    price: (level) => Math.round(20000 + ((300 * level) ** 1.35)),
-    kps: (level) => Math.round((15 * level) ** 1.5),
+    price: (level) => Math.round(100000 + ((400 * level) ** 1.35)),
+    kps: (level) => Math.round((40 * level) ** 1.5),
 
     parent_upgrade: "natbank"
   },
@@ -84,10 +84,10 @@ export const upgrades = [
     name: "blackberry factory",
     description:
       "Mass produce the greatest phone of All Time to rake in the KevBucks!",
-    image: "assets/icons/icon_placeholder.png",
+    image: "assets/icons/icon_bbfactory.png",
 
-    price: (level) => Math.round(20000 + ((300 * level) ** 1.35)),
-    kps: (level) => Math.round((15 * level) ** 1.5),
+    price: (level) => Math.round(200000 + ((500 * level) ** 1.35)),
+    kps: (level) => Math.round((50 * level) ** 1.5),
 
     parent_upgrade: "farm"
   },
@@ -96,10 +96,10 @@ export const upgrades = [
     name: "goldencue",
     description:
       "The finest cue you've ever seen. Engraved with an ornate K. Perfect for prodding.",
-    image: "assets/icons/icon_placeholder.png",
+    image: "assets/icons/icon_goldencue.png",
 
-    price: (level) => Math.round(20000 + ((300 * level) ** 1.35)),
-    kps: (level) => Math.round((15 * level) ** 1.5),
+    price: (level) => Math.round(310000 + ((600 * level) ** 1.35)),
+    kps: (level) => Math.round((60 * level) ** 1.5),
 
     parent_upgrade: "bbfactory"
   },
@@ -108,10 +108,10 @@ export const upgrades = [
     name: "central bank",
     description:
       "Kevster is now on the Stock Exchange! Mint KevBucks at an international scale!",
-    image: "assets/icons/icon_placeholder.png",
+    image: "assets/icons/icon_centralbank.png",
 
-    price: (level) => Math.round(20000 + ((300 * level) ** 1.35)),
-    kps: (level) => Math.round((15 * level) ** 1.5),
+    price: (level) => Math.round(400000 + ((1000 * level) ** 1.35)),
+    kps: (level) => Math.round((100 * level) ** 1.5),
 
     parent_upgrade: "goldencue"
   },
@@ -120,10 +120,10 @@ export const upgrades = [
     name: "kev-x launchpad",
     description:
       "Send rockets to space to extract KevBucks from other planets!",
-    image: "assets/icons/icon_placeholder.png",
+    image: "assets/icons/icon_kevx.png",
 
-    price: (level) => Math.round(20000 + ((300 * level) ** 1.35)),
-    kps: (level) => Math.round((15 * level) ** 1.5),
+    price: (level) => Math.round(600000 + ((1300 * level) ** 1.35)),
+    kps: (level) => Math.round((120 * level) ** 1.5),
 
     parent_upgrade: "centralbank"
   },
@@ -132,10 +132,10 @@ export const upgrades = [
     name: "chemical lab",
     description:
       "Break into facilities and steal their chemicals to make KevBucks EVEN STRONGER!!",
-    image: "assets/icons/icon_placeholder.png",
+    image: "assets/icons/icon_chemlab.png",
 
-    price: (level) => Math.round(20000 + ((300 * level) ** 1.35)),
-    kps: (level) => Math.round((15 * level) ** 1.5),
+    price: (level) => Math.round(800000 + ((1500 * level) ** 1.35)),
+    kps: (level) => Math.round((180 * level) ** 1.5),
 
     parent_upgrade: "kevx"
   },
@@ -146,8 +146,8 @@ export const upgrades = [
       "Convert the fabric of the Universe into KevBucks.",
     image: "assets/icons/icon_placeholder.png",
 
-    price: (level) => Math.round(20000 + ((300 * level) ** 1.35)),
-    kps: (level) => Math.round((15 * level) ** 1.5),
+    price: (level) => Math.round(1000000 + ((2000 * level) ** 1.35)),
+    kps: (level) => Math.round((200 * level) ** 1.5),
 
     parent_upgrade: "chemlab"
   },
@@ -158,8 +158,8 @@ export const upgrades = [
       "Warp in KevBucks from our own future production line! How meta!",
     image: "assets/icons/icon_placeholder.png",
 
-    price: (level) => Math.round(20000 + ((300 * level) ** 1.35)),
-    kps: (level) => Math.round((15 * level) ** 1.5),
+    price: (level) => Math.round(1500000 + ((2500 * level) ** 1.35)),
+    kps: (level) => Math.round((350 * level) ** 1.5),
 
     parent_upgrade: "matterconv"
   },
@@ -170,8 +170,8 @@ export const upgrades = [
       "Anything we find can be turned into KevBucks.",
     image: "assets/icons/icon_placeholder.png",
 
-    price: (level) => Math.round(20000 + ((300 * level) ** 1.35)),
-    kps: (level) => Math.round((15 * level) ** 1.5),
+    price: (level) => Math.round(20000000 + ((2800 * level) ** 1.35)),
+    kps: (level) => Math.round((600 * level) ** 1.5),
 
     parent_upgrade: "timewarp"
   },
@@ -182,8 +182,8 @@ export const upgrades = [
       "Take advantage of space-time quantum warps to obtain millions of years worth of production!",
     image: "assets/icons/icon_placeholder.png",
 
-    price: (level) => Math.round(20000 + ((300 * level) ** 1.35)),
-    kps: (level) => Math.round((15 * level) ** 1.5),
+    price: (level) => Math.round(30000000 + ((4000 * level) ** 1.35)),
+    kps: (level) => Math.round((700 * level) ** 1.5),
 
     parent_upgrade: "metaverse"
   },
@@ -192,10 +192,10 @@ export const upgrades = [
     name: "kevcloner",
     description:
       "We can create another. Stronger. Faster. Better. Clone the Man Himself to exponentially accelerate production.",
-    image: "assets/icons/icon_placeholder.png",
+    image: "assets/icons/icon_kevcloner.png",
 
-    price: (level) => Math.round(20000 + ((300 * level) ** 1.35)),
-    kps: (level) => Math.round((15 * level) ** 1.5),
+    price: (level) => Math.round(50000000 + ((5000 * level) ** 1.35)),
+    kps: (level) => Math.round((800 * level) ** 1.5),
 
     parent_upgrade: "quantumwarp"
   },
@@ -204,10 +204,10 @@ export const upgrades = [
     name: "The Infiniverse",
     description:
       "You have discovered Infinity. It waits for you.",
-    image: "assets/icons/icon_placeholder.png",
+    image: "assets/icons/icon_infiniverse.png",
 
     price: (level) => Math.round(9999999999999 + ((300 * level) ** 1.35)),
-    kps: (level) => Math.round((15 * level) ** 1.5),
+    kps: (level) => Math.round((9000 * level) ** 1.5),
 
     parent_upgrade: "kevcloner"
   },

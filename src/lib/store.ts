@@ -89,7 +89,8 @@ const useGameStore = create(
         kev_bucks: state.kev_bucks,
         purchased_upgrades: state.purchased_upgrades,
         xp: state.xp,
-        paused: state.paused
+        paused: state.paused,
+        cookie_mode: state.cookie_mode,
       } as GameStore)
     }
   ))

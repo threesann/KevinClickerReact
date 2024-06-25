@@ -1,6 +1,7 @@
 import { motion } from "framer-motion"
 import { useEffect, useState } from "react"
 import Tips from "../content/tips";
+import useGameStore from "../lib/store";
 import KevinRain from "./effects/KevinRain"
 
 const LOADING_TIME = 500 + (2000 * Math.random())
@@ -16,6 +17,7 @@ export default function LoadingScreen({ }: ComponentProps) {
   const [selectedTip] = useState(Tips[getRandomInt(0, Tips.length - 1)])
   const [loadingTimeLeft, setLoadingTimeLeft] = useState(LOADING_TIME)
   const [isLoading, setIsLoading] = useState(true)
+  const cookieMode = useGameStore(state => state.cookie_mode)
 
   useEffect(() => {
     let interval = setInterval(() => {
@@ -40,7 +42,7 @@ export default function LoadingScreen({ }: ComponentProps) {
     )}
 
     <div className="text-center m-6">
-      <img src="/assets/logo_main.png" className="max-w-md" />
+      <img src={cookieMode ? "/assets/logo_main-cookie.png" : "/assets/logo_main.png"} className="max-w-md" />
       <p className="text-xl text-white/75 max-w-md text-center">{selectedTip}</p>
       <div className="w-full h-10 bg-black/50 border-4 mt-3 overflow-hidden">
         <div style={{ backgroundImage: "url(/assets/clicker/kevster.png)", backgroundSize: "auto 100%", width: `${(1 - (loadingTimeLeft / LOADING_TIME)) * 100}%` }} className="h-full" />

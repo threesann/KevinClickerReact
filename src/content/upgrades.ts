@@ -156,7 +156,7 @@ export const upgrades = [
     name: "time warper",
     description:
       "Warp in KevBucks from our own future production line! How meta!",
-    image: "assets/icons/icon_placeholder.png",
+    image: "assets/icons/icon_timewarp.png",
 
     price: (level) => Math.round(1500000 + ((2500 * level) ** 1.35)),
     kps: (level) => Math.round((350 * level) ** 1.5),

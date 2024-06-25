@@ -32,7 +32,7 @@ export interface GameStore {
   toggleSupportShown: (state?: boolean) => void
 }
 
-const level_constant = 0.04;
+const level_constant = 0.025;
 const useGameStore = create(
   persist<GameStore>(
     (set, get) => ({

@@ -6,7 +6,7 @@ export default function KevinRain({ }: ComponentProps) {
   const [delay, setDelay] = useState(Math.random() * 3)
 
   useEffect(() => {
-    let interval = -1
+    let interval: any = -1
     let timeout = setTimeout(() => {
       interval = setInterval(() => {
         setPositionX(() => (window.innerWidth * Math.random()))

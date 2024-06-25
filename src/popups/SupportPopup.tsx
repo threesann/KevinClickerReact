@@ -20,7 +20,7 @@ export default function SupportPopup() {
   }, [])
 
   useEffect(() => {
-    let timeout = -1
+    let timeout: any = -1
     timeout = setInterval(() => {
       setPlaySound(false)
     }, 10_000)

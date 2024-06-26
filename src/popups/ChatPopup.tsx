@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import useGameStore from "../lib/store";
 import supabase from "../lib/supabase";
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 
 interface Message {
   content: string;
@@ -22,9 +22,12 @@ export default function ChatPopup({ }: ComponentProps) {
   const [messages, setMessages] = useState<Message[]>([])
   const [content, setContent] = useState("")
   const messageBoxRef = useRef<HTMLDivElement>(null)
+
   const [chatPosition, setChatPosition] = useState([null, null])
+  const [chatRotation, setChatRotation] = useState("0deg")
+
   const [announcement, setAnnouncement] = useState("")
-  const [jumpscare, setJumpscare] = useState(false)
+  const [jumpscare, setJumpscare] = useState("")
   const [videoJumpscare, setVideoJumpscare] = useState(false)
 
   useEffect(() => {
@@ -46,8 +49,17 @@ export default function ChatPopup({ }: ComponentProps) {
 
         if (command[0] === "/chat") {
           let [_, arg1, arg2] = command
-          if (arg1 === "reset" || !arg2) setChatPosition([null, null]);
-          else setChatPosition([arg1, arg2])
+
+          if (arg1 === "reset") {
+            setChatPosition([null, null])
+            setChatRotation("0deg")
+          }
+          else if (arg1.includes("deg")) {
+            setChatRotation(arg1)
+          }
+          else if (arg2) {
+            setChatPosition([arg1, arg2])
+          }
         }
 
         if (command[0] === "/announce") {
@@ -57,8 +69,8 @@ export default function ChatPopup({ }: ComponentProps) {
         }
 
         if (command[0] === "/kevin") {
-          setJumpscare(true)
-          setTimeout(() => setJumpscare(false), 500)
+          setJumpscare(command[1] ?? "/assets/clicker/kevster.png")
+          setTimeout(() => setJumpscare(""), command[2] ? parseInt(command[2]) : 500)
         }
 
         if (command[0] === "/cool") {
@@ -79,6 +91,16 @@ export default function ChatPopup({ }: ComponentProps) {
               ],
               { duration: 2500, iterations: 1, }
             )
+
+          if (command[1] === "backflip-chat")
+            document.querySelector("#chat")?.animate(
+              [
+                { transform: "rotate(0)" },
+                { transform: "rotate(360deg)" },
+              ],
+              { duration: 2500, iterations: 1, }
+            )
+
           if (command[1] === "shy")
             document.querySelector("body")?.animate(
               [
@@ -113,34 +135,36 @@ export default function ChatPopup({ }: ComponentProps) {
     setContent("")
   }
 
-  return <div className="absolute top-16 left-[0rem] flex transition-all duration-[5000ms]" style={{ left: chatPosition[0] ?? "0rem", top: chatPosition[1] ?? "4rem" }}>
-    {videoJumpscare && <div className="fixed z-50 inset-0"><video src="/assets/foxy.mp4" autoPlay className="h-full w-full" /></div>}
+  return <div>
+    {videoJumpscare && <video src="/assets/foxy.mp4" autoPlay className="fixed z-50 inset-0 h-full w-full" />}
 
-    {jumpscare && <motion.div className="fixed z-50 inset-0"><img src="/assets/clicker/kevster.png" className="h-full w-full" /></motion.div>}
+    {jumpscare && <motion.div className="fixed z-50 inset-0"><img src={jumpscare} className="h-full w-full" /></motion.div>}
 
     {announcement && <div className="fixed inset-0 p-6 z-50 flex items-center justify-center">
       <h2 className="text-7xl bg-black/50 text-center">{announcement}</h2>
     </div>}
-    {chatShown &&
-      <div className="bg-[#3d63ff] w-64 sm:w-96 border-2 flex flex-col p-1.5 h-64">
-        <div ref={messageBoxRef} className="h-full overflow-y-scroll no-scrollbar flex flex-col gap-1 h-72 mb-1.5">
-          {messages.map((message, i) =>
-            <div key={message.content + i} className="flex flex-col bg-black/10 p-1.5">
-              <span className={`leading-5`} style={{ color: message.profile.display_colour }}>{message.profile.username}</span>
-              <span className="leading-tight text-sm">{message.content}</span>
-            </div>
-          )}
+    
+    <div id="chat" className="absolute top-16 left-[0rem] flex transition-all duration-[5000ms]" style={{ left: chatPosition[0] ?? "0rem", top: chatPosition[1] ?? "4rem", rotate: chatRotation }}>
+      {chatShown &&
+        <div className="bg-[#3d63ff] w-64 sm:w-96 border-2 flex flex-col p-1.5 h-64">
+          <div ref={messageBoxRef} className="h-full overflow-y-scroll no-scrollbar flex flex-col gap-1 h-72 mb-1.5">
+            {messages.map((message, i) =>
+              <div key={message.content + i} className="flex flex-col bg-black/10 p-1.5">
+                <span className={`leading-5`} style={{ color: message.profile.display_colour }}>{message.profile.username}</span>
+                <span className="leading-tight text-sm">{message.content}</span>
+              </div>
+            )}
+          </div>
+          <div className="flex gap-1.5">
+            <input onKeyPress={ev => {
+              if (ev.key === "Enter") sendMessage()
+            }} value={content} onChange={(ev) => setContent(ev.target.value)} className="outline-none bg-black/25 px-3 py-1.5 w-full" placeholder="Enter a message..." />
+            <button className="h-9 w-9 bg-black/25 hover:bg-black/50 flex-shrink-0" onClick={sendMessage}>
+              <span>{">"}</span>
+            </button>
+          </div>
         </div>
-        <div className="flex gap-1.5">
-          <input onKeyPress={ev => {
-            if (ev.key === "Enter") sendMessage()
-          }} value={content} onChange={(ev) => setContent(ev.target.value)} className="outline-none bg-black/25 px-3 py-1.5 w-full" placeholder="Enter a message..." />
-          <button className="h-9 w-9 bg-black/25 hover:bg-black/50 flex-shrink-0" onClick={sendMessage}>
-            <span>{">"}</span>
-          </button>
-        </div>
-      </div>
-    }
-    <button onClick={() => toggleChatShown()} className="px-3 py-0.5 bg-[#3d63ff] border-2 border-b-0 rotate-90 origin-bottom-left h-fit"><span className="text-xl">CHAT</span></button>
-  </div>;
+      }
+      <button onClick={() => toggleChatShown()} className="px-3 py-0.5 bg-[#3d63ff] border-2 border-b-0 rotate-90 origin-bottom-left h-fit"><span className="text-xl">CHAT</span></button>
+    </div></div>;
 }

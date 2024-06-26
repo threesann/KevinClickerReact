@@ -24,9 +24,19 @@ export default function AccountButton({ }: ComponentProps) {
       return
     }
 
+    if (username.length > 16) {
+      setError("User credentials do not meet requirements! (16 characters maximum)")
+      return
+    }
+
     let signUpRequest = await supabase.auth.signUp({
       email: `${username}@kevsterclicker.com`,
       password,
+      options: {
+        data: {
+          username,
+        }
+      }
     })
     if (signUpRequest.error) {
       setError(signUpRequest.error.message)
@@ -43,6 +53,11 @@ export default function AccountButton({ }: ComponentProps) {
 
     if (username.length < 4 || password.length < 4) {
       setError("User credentials do not meet requirements! (4 characters minimum)")
+      return
+    }
+
+    if (username.length > 16) {
+      setError("User credentials do not meet requirements! (16 characters maximum)")
       return
     }
 
@@ -80,9 +95,14 @@ export default function AccountButton({ }: ComponentProps) {
 
   return <Popup
     trigger={
-      <button className="bg-black/25 hover:bg-black/50 p-1 w-fit" title={loggedIn ? "My Account" : "Log In"}>
-        <img src={loggedIn ? "/assets/header/m_button_account.png" : "/assets/header/m_button_login.png"} className="h-10 w-10" />
-      </button>
+      <div className="flex gap-1.5 items-center">
+        <button className="bg-black/25 hover:bg-black/50 p-1 w-fit flex-shrink-0" title={loggedIn ? "My Account" : "Log In"}>
+          <img src={loggedIn ? "/assets/header/m_button_account.png" : "/assets/header/m_button_login.png"} className="h-10 w-10" />
+        </button>
+        {loggedIn && <div className="bg-black/25 px-1">
+          <p>{data.user.email?.split("@")[0]}</p>
+        </div>}
+      </div>
     }
     title="Account"
   >
@@ -90,6 +110,7 @@ export default function AccountButton({ }: ComponentProps) {
       !loggedIn ?
         <>
           <span className="leading-tight">You are currently logged in as GUEST. Your progress will be saved LOCALLY, but will not be accessible on other devices. </span>
+          <br />
           <br />
           <span className="leading-tight">NOTE: Upon creating a new account, LOCAL data will be saved to the profile. However, logging in to an existing account will ERASE LOCAL DATA and LOAD ONLINE DATA.</span>
           <form className="flex flex-col" onSubmit={onAccountSubmit}>
@@ -109,9 +130,12 @@ export default function AccountButton({ }: ComponentProps) {
         </>
         :
         <>
-          <span>If you sign out your progress will no longer save to your online account.</span>
+          <span>Logged in as: {data.user.email?.split("@")[0]}</span>
+          <br />
+          <br />
+          <span>If you sign out, your progress will no longer save to your online account.</span>
           <form className="flex flex-col" onSubmit={onSignoutSubmit}>
-            <button className="px-3 py-2 hover:bg-black/50 bg-black/25">Signout</button>
+            <button className="px-3 py-2 hover:bg-black/50 bg-black/25">SIGNOUT</button>
           </form>
         </>
     }

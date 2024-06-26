@@ -13,6 +13,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
+import ChatPopup from './popups/ChatPopup'
 
 const queryClient = new QueryClient()
 
@@ -21,7 +22,7 @@ export default function App() {
 
   useEffect(() => {
     function onKeyPress(event: KeyboardEvent) {
-      if (event.key !== " ") return;
+      if (event.key !== "`") return;
       toggleCookieMode()
     }
     window.addEventListener("keypress", onKeyPress)
@@ -35,12 +36,13 @@ export default function App() {
 
         <HeaderSection />
 
-        <div className='grid lg:grid-cols-3 lg:grid-rows-[1fr_2rem] p-6 min-h-0 gap-6'>
+        <div className='grid lg:grid-cols-3 lg:grid-rows-[1fr_2rem] p-6 min-h-0 gap-6 relative'>
           <div className='flex flex-col lg:col-span-2 min-h-[48rem] gap-6'>
             <ClickerSection />
             <LevelSection />
           </div>
           <UpgradeSection />
+          <ChatPopup />
         </div>
 
         <Analytics />

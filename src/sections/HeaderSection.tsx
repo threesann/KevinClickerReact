@@ -3,17 +3,21 @@ import CreditsPopup from "../popups/CreditsPopup";
 import HowToPlayerPopup from "../popups/HowToPlayPopup";
 import AccountButton from "./header/AccountButton";
 import AudioPlayer from "./header/AudioPlayer";
+import LeaderboardButton from "./header/LeaderboardButton";
 import ResetButton from "./header/ResetButton";
 
 export default function HeaderSection() {
   const cookieMode = useGameStore(state => state.cookie_mode)
 
   return <header className="bg-[#3d63ff] border-b-4 border-[#355af0] w-full h-fit">
-    <div className="flex justify-between items-center relative flex-col sm:flex-row gap-1.5 px-3 lg:px-0 lg:gap-0 py-3 sm:py-0">
+    <div className="flex justify-between items-center relative flex-col md:flex-row gap-1.5 px-3 lg:px-0 lg:gap-0 py-3 md:py-0">
 
       {/* left */}
-      <div className="flex flex-col sm:flex-row gap-1.5 items-center">
-        <AccountButton />
+      <div className="flex flex-col md:flex-row gap-1.5 items-center">
+        <div className="flex gap-1.5 items-center">
+          <AccountButton />
+          <LeaderboardButton />
+        </div>
         <AudioPlayer />
       </div>
 
@@ -25,7 +29,7 @@ export default function HeaderSection() {
 
       {/* right */}
       <div className="flex gap-1">
-        <a href="https://threesann.github.io" title="Back to Home">
+        <a href="https://threesann.github.io" title="Back to Home" className="flex-shrink-0">
           <div className="bg-black/25 hover:bg-black/50 p-1 w-fit">
             <img src="/assets/header/button_home.png" className="h-10 w-10" />
           </div>

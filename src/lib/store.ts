@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist, createJSONStorage, StateStorage } from 'zustand/middleware'
 import { upgrades } from "../content/upgrades";
 import supabase from "./supabase";
-import debounce from "lodash.debounce"
+import throttle from "lodash.throttle"
 
 const storage: StateStorage = {
   getItem: async (name: string): Promise<string | null> => {
@@ -14,17 +14,17 @@ const storage: StateStorage = {
     let { data, error: data_error } = await supabase.from("saves").select("*").eq("name", name).eq("user", session.user.id).limit(1).single()
     if (!data || data_error) return null;
 
-    return data.value;
+    return JSON.stringify(data.value);
   },
-  setItem: debounce(async (name: string, value: string): Promise<void> => {
+  setItem: throttle(async (name: string, value: string): Promise<void> => {
     let { data: { session }, error } = await supabase.auth.getSession()
     if (error || !session) {
       localStorage.setItem(name, value)
       return;
     }
 
-    await supabase.from("saves").upsert({ value, user: session.user.id, name }).eq("user", session.user.id).eq("name", name)
-  }, 500),
+    await supabase.from("saves").upsert({ value: JSON.parse(value), user: session.user.id, name }).eq("user", session.user.id).eq("name", name)
+  }, 3000),
   removeItem: async (name: string): Promise<void> => {
     let { data: { session }, error } = await supabase.auth.getSession()
     if (error || !session) {
@@ -64,6 +64,10 @@ export interface GameStore {
 
   support_shown: boolean
   toggleSupportShown: (state?: boolean) => void
+
+  chat_shown: boolean
+  toggleChatShown: (state?: boolean) => void
+
 }
 
 const level_constant = 0.025;
@@ -114,6 +118,10 @@ const useGameStore = create(
 
       support_shown: false,
       toggleSupportShown: (state: boolean = !get().support_shown) => set({ support_shown: state }),
+
+      chat_shown: false,
+      toggleChatShown: (state: boolean = !get().chat_shown) => set({ chat_shown: state }),
+
     }),
     {
       name: "kevin-clicker-save",

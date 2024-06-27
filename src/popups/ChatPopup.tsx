@@ -3,14 +3,16 @@ import { useEffect, useRef, useState } from "react";
 import useGameStore from "../lib/store";
 import supabase from "../lib/supabase";
 import { motion } from "framer-motion"
+import MessagePreview from "./MessagePreview";
 
-interface Message {
+export interface Message {
   content: string;
   profile: {
     username: string;
     admin: boolean;
     display_colour: string;
-  }
+  },
+  recieved_at: number;
 }
 
 interface ComponentProps { }
@@ -22,6 +24,7 @@ export default function ChatPopup({ }: ComponentProps) {
   const [messages, setMessages] = useState<Message[]>([])
   const [content, setContent] = useState("")
   const messageBoxRef = useRef<HTMLDivElement>(null)
+  const [showRecentMessage, setShowRecentMessage] = useState(false)
 
   const [chatPosition, setChatPosition] = useState([null, null])
   const [chatRotation, setChatRotation] = useState("0deg")
@@ -34,7 +37,9 @@ export default function ChatPopup({ }: ComponentProps) {
     const channel = supabase
       .channel("chat")
       .on("broadcast", { event: "message" }, ({ payload }: any) => {
-        setMessages(messages => [...messages, payload]);
+        setMessages(messages => [...messages, { ...payload, recieved_at: Date.now() }]);
+        setTimeout(() => setShowRecentMessage(!showRecentMessage), 3000)
+
 
         let isAdmin = !!payload.profile.admin
         if (!isAdmin) return;
@@ -143,7 +148,7 @@ export default function ChatPopup({ }: ComponentProps) {
     {announcement && <div className="fixed inset-0 p-6 z-50 flex items-center justify-center">
       <h2 className="text-7xl bg-black/50 text-center">{announcement}</h2>
     </div>}
-    
+
     <div id="chat" className="absolute top-16 left-[0rem] flex transition-all duration-[5000ms]" style={{ left: chatPosition[0] ?? "0rem", top: chatPosition[1] ?? "4rem", rotate: chatRotation }}>
       {chatShown &&
         <div className="bg-[#3d63ff] w-64 sm:w-96 border-2 flex flex-col p-1.5 h-64">
@@ -165,6 +170,14 @@ export default function ChatPopup({ }: ComponentProps) {
           </div>
         </div>
       }
-      <button onClick={() => toggleChatShown()} className="px-3 py-0.5 bg-[#3d63ff] border-2 border-b-0 rotate-90 origin-bottom-left h-fit"><span className="text-xl">CHAT</span></button>
+
+      <div className="relative">
+        <button onClick={() => toggleChatShown()} className="px-3 py-0.5 bg-[#3d63ff] border-2 border-b-0 rotate-90 origin-bottom-left h-fit w-fit">
+          <span className="text-xl">CHAT</span>
+        </button>
+        {!chatShown && <div className="absolute min-w-[16rem] top-28 flex flex-col gap-1.5">
+          {messages.map((message, i) => <MessagePreview key={message.content + i} message={message} />)}
+        </div>}
+      </div>
     </div></div>;
 }

@@ -133,6 +133,7 @@ const useGameStore = create(
         xp: state.xp,
         paused: state.paused,
         cookie_mode: state.cookie_mode,
+        chat_shown: state.chat_shown
       } as GameStore)
     }
   ))

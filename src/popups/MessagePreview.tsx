@@ -15,7 +15,7 @@ export default function MessagePreview({ message }: ComponentProps) {
 
   return <AnimatePresence>
     {shown &&
-      <motion.div className="flex flex-col bg-black/50 p-1.5" initial={{ opacity: 0 }} animate={{ opacity: shown ? 1 : 0 }} exit={{ opacity: 0 }}>
+      <motion.div layout className="flex flex-col bg-black/50 p-1.5 overflow-hidden mt-1.5" initial={{ opacity: 0 }} animate={{ opacity: shown ? 1 : 0 }} exit={{ opacity: 0 }}>
         <span className={`leading-5`} style={{ color: message.profile.display_colour }}>{message.profile.username}</span>
         <span className="leading-tight text-sm">{message.content}</span>
       </motion.div>

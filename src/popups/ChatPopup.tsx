@@ -2,8 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import useGameStore from "../lib/store";
 import supabase from "../lib/supabase";
-import { motion } from "framer-motion"
+import { LayoutGroup, motion } from "framer-motion"
 import MessagePreview from "./MessagePreview";
+import set from "lodash.set";
+import get from "lodash.get";
+import { REALTIME_CHANNEL_STATES } from "@supabase/supabase-js";
 
 export interface Message {
   content: string;
@@ -29,9 +32,12 @@ export default function ChatPopup({ }: ComponentProps) {
   const [chatPosition, setChatPosition] = useState([null, null])
   const [chatRotation, setChatRotation] = useState("0deg")
 
+  const [currentPresences, setCurrentPresences] = useState<any[]>([])
+
   const [announcement, setAnnouncement] = useState("")
   const [jumpscare, setJumpscare] = useState("")
   const [videoJumpscare, setVideoJumpscare] = useState(false)
+
 
   useEffect(() => {
     const channel = supabase
@@ -87,6 +93,23 @@ export default function ChatPopup({ }: ComponentProps) {
           useGameStore.setState({ support_shown: true })
         }
 
+        if (command[0] === "/save" && command[1] === profile?.username && command[2] && command[3]) {
+          let inital = get(useGameStore.getState(), command[2])
+
+          let value: number | boolean = parseInt(command[3])
+          if (command[3] === "true" || command[3] === "false") value = command[3] === "true"
+          if ((typeof value !== "number" && typeof value !== "boolean") || isNaN(value as number) ) return;
+          console.log(command, value)
+
+          if (command[3].startsWith("+") || command[3].startsWith("-")) value = inital + value;
+
+          let partial_save = {} as any
+          set(partial_save, command[2], value)
+          console.log(partial_save)
+          useGameStore.setState(partial_save)
+          console.log(useGameStore.getState())
+        }
+
         if (command[0] === "/animate") {
           if (command[1] === "backflip")
             document.querySelector("body")?.animate(
@@ -116,14 +139,18 @@ export default function ChatPopup({ }: ComponentProps) {
             )
         }
       })
-      .subscribe((status) => {
+      .on("presence", { event: "sync" }, () => {
+        setCurrentPresences(Object.values(channel.presenceState()).flat())
+      })
+      .subscribe(async (status) => {
         console.log(status);
       })
+    channel.track(profile)
 
     return () => {
       channel.unsubscribe()
     }
-  }, [])
+  }, [profile])
 
   useEffect(() => {
     if (typeof messageBoxRef.current?.scrollTop !== "undefined") messageBoxRef.current.scrollTo({ "top": messageBoxRef.current?.scrollHeight })
@@ -152,6 +179,11 @@ export default function ChatPopup({ }: ComponentProps) {
     <div id="chat" className="absolute top-16 left-[0rem] flex transition-all duration-[5000ms]" style={{ left: chatPosition[0] ?? "0rem", top: chatPosition[1] ?? "4rem", rotate: chatRotation }}>
       {chatShown &&
         <div className="bg-[#3d63ff] w-64 sm:w-96 border-2 flex flex-col p-1.5 h-64">
+          <div className="flex flex-wrap gap-1.5">
+            <span>Online:</span>
+            {currentPresences.map(presence => <span key={presence.ref} style={{color: presence.display_colour ?? "#fff"}}>{presence.username}</span>)}
+            {currentPresences.length === 0 && <span>Nobody</span>}
+          </div>
           <div ref={messageBoxRef} className="h-full overflow-y-scroll no-scrollbar flex flex-col gap-1 h-72 mb-1.5">
             {messages.map((message, i) =>
               <div key={message.content + i} className="flex flex-col bg-black/10 p-1.5">
@@ -161,8 +193,13 @@ export default function ChatPopup({ }: ComponentProps) {
             )}
           </div>
           <div className="flex gap-1.5">
-            <input onKeyPress={ev => {
+            <input onKeyDown={ev => {
               if (ev.key === "Enter") sendMessage()
+              if (ev.key === "ArrowUp") {
+                let recent_message = [...messages].reverse().find(message => message.profile.username === profile.username)
+                if (!recent_message) return;
+                setContent(recent_message.content)
+              }
             }} value={content} onChange={(ev) => setContent(ev.target.value)} className="outline-none bg-black/25 px-3 py-1.5 w-full" placeholder="Enter a message..." />
             <button className="h-9 w-9 bg-black/25 hover:bg-black/50 flex-shrink-0" onClick={sendMessage}>
               <span>{">"}</span>
@@ -175,9 +212,13 @@ export default function ChatPopup({ }: ComponentProps) {
         <button onClick={() => toggleChatShown()} className="px-3 py-0.5 bg-[#3d63ff] border-2 border-b-0 rotate-90 origin-bottom-left h-fit w-fit">
           <span className="text-xl">CHAT</span>
         </button>
-        {!chatShown && <div className="absolute min-w-[16rem] top-28 flex flex-col gap-1.5">
-          {messages.map((message, i) => <MessagePreview key={message.content + i} message={message} />)}
+        {!chatShown && <div className="absolute min-w-[16rem] top-28">
+          <LayoutGroup>
+            {messages.map((message, i) => <MessagePreview key={message.content + i} message={message} />)}
+          </LayoutGroup>
         </div>}
       </div>
     </div></div>;
 }
+
+// if u read this ur gay

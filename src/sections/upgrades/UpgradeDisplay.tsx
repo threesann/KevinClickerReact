@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { upgrades } from "../../content/upgrades";
 import { Upgrade } from "../../content/content.types";
 import useGameStore from "../../lib/store";
+import VoicelineTracks from "../../content/voicelines";
 
 interface ComponentProps {
   upgrade: Upgrade;
@@ -31,6 +32,12 @@ export default function UpgradeDisplay({ upgrade }: ComponentProps) {
     deductKevBucks(price)
     incrementUpgradeLevel(upgrade.id)
     incrementXP(10 * upgradeIndex + 10 * upgradeLevel)
+
+    if (upgrade.id === "bbfactory") {
+      let voicelines = VoicelineTracks.filter(x => x.tags.includes("upgrade.blackberry"))
+      let random = Math.floor(Math.random() * voicelines.length);
+      new Audio(voicelines[random].file).play()
+    }
   }
 
   if (isLocked) return <div className="px-3 py-4 bg-black/30 flex items-center justify-center flex-col">

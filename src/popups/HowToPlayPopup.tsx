@@ -8,6 +8,8 @@ export default function HowToPlayerPopup({ }: ComponentProps) {
     </button>
   }
     title="How to play!">
+    <p>If you need any support/need to report a bug, please email <u><a href="mailto:snookerinc51@gmail.com">snookerinc51@gmail.com</a></u>.</p>
+    <br />
     <p><u>Gameplay</u></p>
     <p>Click on Kevster's beautiful face to amass KevBucks. Using your KevBucks, buy upgrades to automate production.</p>
     <br />

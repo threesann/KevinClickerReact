@@ -1,5 +1,6 @@
 import throttle from "lodash.throttle";
 import { useEffect, useState } from "react";
+import VoicelineTracks from "../../content/voicelines";
 import supabase from "../../lib/supabase";
 import Popup from "../../popups/Popup";
 
@@ -23,7 +24,11 @@ export default function LeaderboardButton({ }: ComponentProps) {
 
   return <Popup
     trigger={
-      <button className="bg-black/25 hover:bg-black/50 p-1 w-fit flex-shrink-0" title="Leaderboard">
+      <button onMouseDown={() => {
+        let voicelines = VoicelineTracks.filter(x => x.tags.includes("leaderboard"))
+        let random = Math.floor(Math.random() * voicelines.length);
+        new Audio(voicelines[random].file).play()
+      }} className="bg-black/25 hover:bg-black/50 p-1 w-fit flex-shrink-0" title="Leaderboard">
         <img src="/assets/header/m_button_leader.png" className="size-10" />
       </button>
     }

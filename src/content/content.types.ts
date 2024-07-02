@@ -16,3 +16,8 @@ export interface AudioTrack {
   artist: string;
   file: string;
 }
+
+export interface VoicelineTrack {
+  file: string;
+  tags: string[];
+}

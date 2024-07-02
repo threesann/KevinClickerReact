@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import AudioTracks from "../../content/audio";
 import useGameStore from "../../lib/store";
 import Marquee from "react-fast-marquee";
+import VoicelineTracks from "../../content/voicelines";
 
 export default function AudioPlayer() {
   let ref = useRef<HTMLAudioElement>(null)
@@ -55,7 +56,15 @@ export default function AudioPlayer() {
         <path d="M3.288 4.818A1.5 1.5 0 0 0 1 6.095v7.81a1.5 1.5 0 0 0 2.288 1.276l6.323-3.905c.155-.096.285-.213.389-.344v2.973a1.5 1.5 0 0 0 2.288 1.276l6.323-3.905a1.5 1.5 0 0 0 0-2.552l-6.323-3.906A1.5 1.5 0 0 0 10 6.095v2.972a1.506 1.506 0 0 0-.389-.343L3.288 4.818Z" />
       </svg>
     </button>
-    <button className="hover:bg-black/25 lg:p-2 p-3 w-fit" title="Pause/Play" onClick={() => togglePaused()}>
+    <button className="hover:bg-black/25 lg:p-2 p-3 w-fit" title="Pause/Play" onClick={() => {
+      togglePaused()
+
+      if (paused) {
+        let voicelines = VoicelineTracks.filter(x => x.tags.includes("music.start"))
+        let random = Math.floor(Math.random() * voicelines.length);
+        new Audio(voicelines[random].file).play()
+      }
+    }}>
       {!paused ?
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-6">
           <path d="M5.75 3a.75.75 0 0 0-.75.75v12.5c0 .414.336.75.75.75h1.5a.75.75 0 0 0 .75-.75V3.75A.75.75 0 0 0 7.25 3h-1.5ZM12.75 3a.75.75 0 0 0-.75.75v12.5c0 .414.336.75.75.75h1.5a.75.75 0 0 0 .75-.75V3.75a.75.75 0 0 0-.75-.75h-1.5Z" />

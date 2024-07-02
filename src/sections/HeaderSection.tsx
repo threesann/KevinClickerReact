@@ -1,3 +1,4 @@
+import VoicelineTracks from "../content/voicelines";
 import useGameStore from "../lib/store";
 import CreditsPopup from "../popups/CreditsPopup";
 import HowToPlayerPopup from "../popups/HowToPlayPopup";
@@ -23,7 +24,11 @@ export default function HeaderSection() {
 
       {/* center */}
       <div className="absolute left-1/2 -translate-x-1/2 hidden lg:block">
-        <img src={cookieMode ? "/assets/logo_main-cookie.png" : "/assets/logo_main.png"} className="h-10" />
+        <img onClick={() => {
+          let voicelines = VoicelineTracks.filter(x => x.tags.includes("logo"))
+          let random = Math.floor(Math.random() * voicelines.length);
+          new Audio(voicelines[random].file).play()
+        }} src={cookieMode ? "/assets/logo_main-cookie.png" : "/assets/logo_main.png"} className="h-10" />
         {/* <h1 className="text-3xl drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] uppercase">{cookieMode ? "Kookie" : "Kevster"} Clicker</h1> {/* placeholder */}
       </div>
 

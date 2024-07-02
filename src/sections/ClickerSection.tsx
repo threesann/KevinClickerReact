@@ -3,6 +3,7 @@ import { motion } from "framer-motion"
 import useGameStore from "../lib/store";
 import { useEffect, useMemo, useState } from "react";
 import { upgrades } from "../content/upgrades";
+import VoicelineTracks from "../content/voicelines";
 
 interface ComponentProps { }
 export default function ClickerSection({ }: ComponentProps) {
@@ -47,6 +48,14 @@ export default function ClickerSection({ }: ComponentProps) {
 
   function onClick() {
     setPlayerClicks(v => v + 1)
+
+    let chance = Math.random() < (1 / 20)
+    if (chance) {
+      let voicelines = VoicelineTracks.filter(x => x.tags.includes("click"))
+      let random = Math.floor(Math.random() * voicelines.length);
+      new Audio(voicelines[random].file).play()
+    }
+
     if (playerClicks < 20) return incrementKevBucks()
   }
 

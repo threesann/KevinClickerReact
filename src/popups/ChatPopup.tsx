@@ -17,6 +17,8 @@ export interface Message {
   recieved_at: number;
 }
 
+const KevinUsername = "HenlyGenius"
+
 interface ComponentProps { }
 export default function ChatPopup({ }: ComponentProps) {
   const { data } = useQuery({ queryKey: ["user"], queryFn: () => supabase.auth.getUser().then(x => x.data) })
@@ -180,13 +182,13 @@ export default function ChatPopup({ }: ComponentProps) {
         <div className="bg-[#3d63ff] w-64 sm:w-96 border-2 flex flex-col p-1.5 h-64">
           <div className="flex flex-wrap gap-x-1.5 pb-1.5">
             <span className="leading-4">Online:</span>
-            {currentPresences.map((presence) => <span key={presence.ref} className="leading-4" style={{ color: presence.display_colour ?? "#fff" }}>{presence.username}</span>)}
+            {currentPresences.map((presence) => <span key={presence.ref} className="leading-4" style={{ color: presence.display_colour ?? "#fff" }}>{presence.username === KevinUsername && "👑"}{presence.username}{presence.username === KevinUsername && "👑"}</span>)}
             {currentPresences.length === 0 && <span className="leading-4">Nobody</span>}
           </div>
           <div ref={messageBoxRef} className="h-full overflow-y-scroll no-scrollbar flex flex-col gap-1 h-72 mb-1.5">
             {messages.map((message, i) =>
               <div key={message.content + i} className="flex flex-col bg-black/10 p-1.5">
-                <span className={`leading-5`} style={{ color: message.profile.display_colour }}>{message.profile.username}</span>
+                <span className={`leading-5`} style={{ color: message.profile.display_colour }}>{message.profile.username === KevinUsername && "👑"}{message.profile.username}{message.profile.username === KevinUsername && "👑"}</span>
                 <span className="leading-tight text-sm">{message.content}</span>
               </div>
             )}

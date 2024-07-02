@@ -30,7 +30,7 @@ export default function UpgradeDisplay({ upgrade }: ComponentProps) {
     let upgradeIndex = (upgrades.findIndex(x => x.id === upgrade.id) ?? 0) + 1
     deductKevBucks(price)
     incrementUpgradeLevel(upgrade.id)
-    incrementXP(Math.ceil((upgradeIndex ** 4) + (upgradeLevel + 1) ** 2.5))
+    incrementXP(10 * upgradeIndex + 10 * upgradeLevel)
   }
 
   if (isLocked) return <div className="px-3 py-4 bg-black/30 flex items-center justify-center flex-col">

@@ -27,6 +27,14 @@ export default {
           "100%": {
             top: "205vh"
           }
+        },
+        "roll": {
+          "0%": {
+            transform: "rotate(0deg)"
+          },
+          "100%": {
+            transform: "rotate(360deg)"
+          }
         }
       }
     },

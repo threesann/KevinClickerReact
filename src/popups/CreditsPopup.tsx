@@ -3,7 +3,7 @@ import Popup from "./Popup";
 interface ComponentProps { }
 export default function CreditsPopup({ }: ComponentProps) {
   return <Popup trigger={
-    <button className="bg-black/25 hover:bg-black/50 p-1 w-fit" title="Credits">
+    <button className="bg-black/25 hover:bg-black/50 p-1 w-fit flex-shrink-0" title="Credits">
       <img src="/assets/header/button_credits.png" className="h-10 w-10" />
     </button>
   }  title="Credits!">

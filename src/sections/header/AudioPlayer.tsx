@@ -16,7 +16,7 @@ export default function AudioPlayer() {
   const [shouldLoop, setShouldLoop] = useState(false)
 
   useEffect(() => {
-    let interval = setInterval(() => {
+    let interval: any = setInterval(() => {
       if (paused) return clearInterval(interval)
       if (!ref.current?.paused) clearInterval(interval)
       try {

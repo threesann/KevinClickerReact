@@ -6,7 +6,6 @@ import { LayoutGroup, motion } from "framer-motion"
 import MessagePreview from "./MessagePreview";
 import set from "lodash.set";
 import get from "lodash.get";
-import { REALTIME_CHANNEL_STATES } from "@supabase/supabase-js";
 
 export interface Message {
   content: string;
@@ -98,7 +97,7 @@ export default function ChatPopup({ }: ComponentProps) {
 
           let value: number | boolean = parseInt(command[3])
           if (command[3] === "true" || command[3] === "false") value = command[3] === "true"
-          if ((typeof value !== "number" && typeof value !== "boolean") || isNaN(value as number) ) return;
+          if ((typeof value !== "number" && typeof value !== "boolean") || isNaN(value as number)) return;
           console.log(command, value)
 
           if (command[3].startsWith("+") || command[3].startsWith("-")) value = inital + value;
@@ -172,17 +171,17 @@ export default function ChatPopup({ }: ComponentProps) {
 
     {jumpscare && <motion.div className="fixed z-50 inset-0"><img src={jumpscare} className="h-full w-full" /></motion.div>}
 
-    {announcement && <div className="fixed inset-0 p-6 z-50 flex items-center justify-center">
+    {announcement && <div className="fixed inset-0 p-6 z-50 flex items-center justify-center pointer-events-none">
       <h2 className="text-7xl bg-black/50 text-center">{announcement}</h2>
     </div>}
 
     <div id="chat" className="absolute top-16 left-[0rem] flex transition-all duration-[5000ms]" style={{ left: chatPosition[0] ?? "0rem", top: chatPosition[1] ?? "4rem", rotate: chatRotation }}>
       {chatShown &&
         <div className="bg-[#3d63ff] w-64 sm:w-96 border-2 flex flex-col p-1.5 h-64">
-          <div className="flex flex-wrap gap-1.5">
-            <span>Online:</span>
-            {currentPresences.map(presence => <span key={presence.ref} style={{color: presence.display_colour ?? "#fff"}}>{presence.username}</span>)}
-            {currentPresences.length === 0 && <span>Nobody</span>}
+          <div className="flex flex-wrap gap-x-1.5 pb-1.5">
+            <span className="leading-4">Online:</span>
+            {currentPresences.map((presence) => <span key={presence.ref} className="leading-4" style={{ color: presence.display_colour ?? "#fff" }}>{presence.username}</span>)}
+            {currentPresences.length === 0 && <span className="leading-4">Nobody</span>}
           </div>
           <div ref={messageBoxRef} className="h-full overflow-y-scroll no-scrollbar flex flex-col gap-1 h-72 mb-1.5">
             {messages.map((message, i) =>

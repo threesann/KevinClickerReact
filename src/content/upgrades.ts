@@ -207,7 +207,7 @@ export const upgrades = [
     image: "assets/icons/icon_infiniverse.png",
 
     price: (level) => Math.round(9999999999999 + ((300 * level) ** 1.35)),
-    kps: (level) => Math.round((9000 * level) ** 1.5),
+    kps: (level) => Math.round((999999 * level) ** 1.5),
 
     parent_upgrade: "kevcloner"
   },

@@ -39,10 +39,10 @@ export default function SupportPopup() {
   }, [])
 
   return <motion.div className="fixed bottom-3 right-3 px-3 py-1.5 bg-blue-700/90 flex flex-col sm:flex-row gap-3 items-center" initial={{ right: "-25rem" }} animate={{ right: open ? "1rem" : "-25rem" }} onAnimationComplete={(e) => { setPlaySound(false); }} onAnimationStart={(e) => { setPlaySound(true); }} transition={{ duration: 10, "ease": "linear" }}>
-    <div className="relative w-32 h-24">
+    {/* <div className="relative w-32 h-24">
       <img src="/assets/support/devansh.png" className="absolute bottom-0" />
-    </div>
-    <div className="max-w-[14rem]">
+    </div> */}
+    <div className="max-w-[16rem]">
       <div className="flex justify-between gap-3 items-center">
         <h3 className="text-xl leading-tight">Something to report?</h3>
         <button onClick={() => { setOpen(false) }}>

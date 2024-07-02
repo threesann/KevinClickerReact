@@ -57,13 +57,13 @@ export default function AudioPlayer() {
       </svg>
     </button>
     <button className="hover:bg-black/25 lg:p-2 p-3 w-fit" title="Pause/Play" onClick={() => {
-      togglePaused()
-
       if (paused) {
         let voicelines = VoicelineTracks.filter(x => x.tags.includes("music.start"))
         let random = Math.floor(Math.random() * voicelines.length);
         new Audio(voicelines[random].file).play()
       }
+
+      setTimeout(() => togglePaused(), paused ? 2500 : 0)
     }}>
       {!paused ?
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-6">
